@@ -5,9 +5,10 @@ namespace SlimStatic\View;
 class LayoutView extends \Slim\View
 {
 
-    protected static $PARTIALS_DIR = 'partials/';
-    protected static $LAYOUTS_DIR = 'layouts/';
-    protected static $PAGES_DIR = 'pages/';
+    public static $PARTIAL = 'partials/';
+    public static $LAYOUT = 'layouts/';
+    public static $ERROR = 'errors/';
+    public static $PAGE = 'pages/';
 
     protected $layout;
 
@@ -18,14 +19,14 @@ class LayoutView extends \Slim\View
 
     public function setLayout($layout)
     {
-        $this->layout = self::$LAYOUTS_DIR . $layout;
+        $this->layout = self::$LAYOUT . $layout;
     }
 
-    public function render($template)
+    public function render($template, $prefix = null)
     {
         if ($this->hasLayout())
         {
-            $content = parent::render(self::$PAGES_DIR . $template);
+            $content = parent::render(($prefix ? $prefix : self::$PAGE) . $template);
             $this->setData(array_merge($this->getData(), array(
                 '_content' => $content
             )));
@@ -42,7 +43,7 @@ class LayoutView extends \Slim\View
         if (!empty($data)) {
             $this->setData($data);
         }
-        return parent::render(self::$PARTIALS_DIR . $template);
+        return parent::render(self::$PARTIAL . $template);
     }
 
     public function hasLayout()
