@@ -1,10 +1,18 @@
 <?php
 require __DIR__.'/../vendor/autoload.php';
+$config = require __DIR__.'/../app/config/app.php';
 
-$app = new \Slim\Slim(array(
+$app = new \Slim\Slim(array_merge($config, array(
     'view' => new \SlimStatic\View\LayoutView('main.php'),
     'templates.path' => __DIR__.'/../app/views'
-));
+)));
+
+$app->hook('slim.before', function () use ($app) {
+    $generator = new \SlimStatic\Route\Generator($app);
+    $generator->apply($generator->generate(
+        $app->getMode() !== 'production'
+    ));
+});
 
 $app->error(function (\Exception $exception) use ($app) {
     $app->view()->appendData(array(
@@ -20,12 +28,6 @@ $app->notFound(function () use ($app) {
         'title' => 'Page Not Found'
     ));
     echo $app->view()->render('404.php', \SlimStatic\View\LayoutView::$ERROR);
-});
-
-$app->get('/', function () use ($app) {
-    $app->render('index.php', array(
-        'title' => 'Home'
-    ));
 });
 
 $app->run();

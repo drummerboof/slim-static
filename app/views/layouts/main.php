@@ -3,7 +3,7 @@
 
     <head>
         <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
-        <title><?php echo $title; ?> | My Site</title>
+        <title><?php echo $title; ?> | Slim Static</title>
     </head>
 
     <body>

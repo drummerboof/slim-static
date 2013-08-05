@@ -80,7 +80,7 @@ class LayoutView extends \Slim\View
 
     /**
      * Return true if a layout has been set on the view
-     * 
+     *
      * @return bool
      */
     public function hasLayout()
