@@ -73,7 +73,7 @@ class LayoutView extends \Slim\View
     public function partial($template, $data = array())
     {
         if (!empty($data)) {
-            $this->setData($data);
+            $this->appendData($data);
         }
         return parent::render(self::$PARTIAL . $template);
     }
