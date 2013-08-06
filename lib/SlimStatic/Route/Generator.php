@@ -26,6 +26,11 @@ class Generator
     protected $config = array();
 
     /**
+     * @var array
+     */
+    protected $routes = array();
+
+    /**
      * @param \Slim\Slim $app
      * @param array $config
      */
@@ -45,9 +50,11 @@ class Generator
      * @param bool $force
      * @return array
      */
-    public function generate($force = false)
+    public function routes($force = false)
     {
-        $routes = array();
+        if (!empty($this->routes) && !$force) {
+            return $this->routes;
+        }
 
         if (!$this->lockExists() || $force) {
             $iterator = new \RecursiveIteratorIterator(
@@ -63,12 +70,13 @@ class Generator
             $file = new \SplFileInfo($path);
             if ($file->isFile() && $file->isReadable()) {
                 $route = new FileRoute($file, $this->config['view.path']);
-                if (!array_key_exists($route->route(), $routes)) {
-                    $routes[$route->route()] = $route;
+                if (!array_key_exists($route->route(), $this->routes)) {
+                    $this->routes[$route->route()] = $route;
                 }
             }
         }
-        return $routes;
+
+        return $this->routes;
     }
 
     /**

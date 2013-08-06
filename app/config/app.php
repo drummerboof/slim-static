@@ -11,7 +11,7 @@ return array(
     'mode' => 'development',
 
     // Debugging
-    'debug' => false,
+    'debug' => true,
 
     // Logging
     // 'log.writer' => null,

@@ -9,7 +9,7 @@ $app = new \Slim\Slim(array_merge($config, array(
 
 $app->hook('slim.before', function () use ($app) {
     $generator = new \SlimStatic\Route\Generator($app);
-    $generator->apply($generator->generate(
+    $generator->apply($generator->routes(
         $app->getMode() !== 'production'
     ));
 });
