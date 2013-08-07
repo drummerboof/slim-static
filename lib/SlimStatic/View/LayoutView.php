@@ -16,14 +16,26 @@ class LayoutView extends \Slim\View
     public static $ERROR = 'errors/';
     public static $PAGE = 'pages/';
 
+    /**
+     * @var string
+     */
     protected $layout;
 
     /**
-     * @param null|string $layout
+     * @var \SlimStatic\View\PageManager
      */
-    public function __construct($layout = null)
+    protected $pages;
+
+    /**
+     * @param PageManager $pageManager
+     * @param null $layout
+     */
+    public function __construct(PageManager $pageManager, $layout = null)
     {
-        $this->setLayout($layout);
+        $this->pages = $pageManager;
+        if ($layout) {
+            $this->setLayout($layout);
+        }
     }
 
     /**
@@ -86,6 +98,26 @@ class LayoutView extends \Slim\View
     public function hasLayout()
     {
         return $this->layout !== null;
+    }
+
+    /**
+     * Get the page manager
+     *
+     * @return \SlimStatic\View\PageManager
+     */
+    public function pages()
+    {
+        return $this->pages;
+    }
+
+    /**
+     * Get the current page
+     *
+     * @return Page
+     */
+    public function page()
+    {
+        return $this->pages->current();
     }
 
 }

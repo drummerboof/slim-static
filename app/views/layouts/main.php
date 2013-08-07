@@ -3,7 +3,7 @@
 
     <head>
         <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
-        <title><?php echo $title; ?> | Slim Static</title>
+        <title><?php echo $this->page()->title(); ?> | Slim Static</title>
     </head>
 
     <body>
@@ -14,7 +14,7 @@
             <?php echo $_content; ?>
         </div>
 
-        <?php echo $title; ?>
+        <?php echo $this->page()->title(); ?>
 
     </body>
 </html>

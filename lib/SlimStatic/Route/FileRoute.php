@@ -56,14 +56,4 @@ class FileRoute
     {
         return 'routes.' . ($this->route() === '/' ? 'index' : str_replace('/', '.', trim($this->route(), '/')));
     }
-
-    /**
-     * Get the placeholder title for this route
-     *
-     * @return string
-     */
-    public function title()
-    {
-        return $this->route() === '/' ? 'Home' : ucfirst(basename(rtrim($this->route(), '/')));
-    }
 }

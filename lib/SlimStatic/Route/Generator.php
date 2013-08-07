@@ -94,9 +94,6 @@ class Generator
         /* @var FileRoute $route */
         foreach ($routes as $path => $route) {
             $this->app->map($path, function () use ($path, $route) {
-                $this->app->view()->appendData(array(
-                    'title' => $route->title()
-                ));
                 $this->app->applyHook($route->hook(), $this->app);
                 $this->app->render($route->view());
             })->via('GET', 'POST');
