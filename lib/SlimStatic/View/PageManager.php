@@ -51,7 +51,7 @@ class PageManager {
      */
     public function current()
     {
-        return $this->get(rtrim($this->request->getPath(), '/'));
+        return $this->get(rtrim($this->request->getPathInfo(), '/'));
     }
 
     /**

@@ -28,7 +28,7 @@ class Page {
      */
     public function isCurrent()
     {
-        return rtrim($this->request->getPath(), '/') === rtrim($this->route->route(), '/');
+        return rtrim($this->request->getPathInfo(), '/') === rtrim($this->route->route(), '/');
     }
 
     /**

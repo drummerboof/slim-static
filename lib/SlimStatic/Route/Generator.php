@@ -37,10 +37,12 @@ class Generator
     public function __construct(Slim $app, array $config = array())
     {
         $this->app = $app;
+        $root = rtrim($this->app->root(), 'index.php/');
         $this->config = array_merge(array(
-            'view.path' => $this->app->root() . '../app/views/pages/',
-            'lock.path' => $this->app->root() . '../app/cache/'
+            'view.path' => $root . '/../app/views/pages/',
+            'lock.path' => $root . '/../app/cache/'
         ), $config);
+        $this->fixPath();
     }
 
     /**
@@ -110,6 +112,8 @@ class Generator
     }
 
     /**
+     * Read and decode the contents of the lock file
+     *
      * @return array
      */
     protected function readLock()
@@ -118,6 +122,8 @@ class Generator
     }
 
     /**
+     * Return true if the lock file exists
+     *
      * @return bool
      */
     protected function lockExists()
@@ -125,8 +131,32 @@ class Generator
         return file_exists($this->lockFile());
     }
 
+    /**
+     * Get the path to the lock file
+     *
+     * @return string
+     */
     protected function lockFile()
     {
         return realpath($this->config['lock.path']) . '/pages';
+    }
+
+    /**
+     * Fix for an issue if running the application from the app root rather than web directory.
+     * This removes the SCRIPT_NAME prefix if and only if it's part of the request URI path.
+     *
+     * @see http://help.slimframework.com/discussions/problems/769-url-routing-breaks-if-rewrite-rules-dont-match-underlying-structure
+     */
+    protected function fixPath()
+    {
+        $env = $this->app->environment();
+        $requestUri = $_SERVER['REQUEST_URI'];
+        $scriptName = $env['SCRIPT_NAME'];
+        $prefixLen = strlen($scriptName);
+        if (substr($requestUri, 0, $prefixLen) === $scriptName) {
+            $env['PATH_INFO'] = substr_replace($requestUri, '', 0, $prefixLen);
+        } else {
+            $env['PATH_INFO'] = $requestUri;
+        }
     }
 }

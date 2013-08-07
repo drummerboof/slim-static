@@ -46,7 +46,7 @@ class NotFoundPage extends Page {
      */
     public function url()
     {
-        return $this->request->getPath();
+        return $this->request->getPathInfo();
     }
 
     /**
