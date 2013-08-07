@@ -11,3 +11,10 @@
         <?php endforeach; ?>
     </ul>
 <?php endif; ?>
+
+<ul>
+    <?php $path = $this->pages()->path($this->page());
+    foreach ($path as $page): ?>
+        <li><?php echo $page->title(); ?></li>
+    <?php endforeach; ?>
+</ul>
