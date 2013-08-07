@@ -48,7 +48,7 @@ class Page {
      */
     public function id()
     {
-        return $this->url() === '/' ? 'home' : str_replace('/', '-', (rtrim($this->route->route(), '/')));
+        return $this->url() === '/' ? 'home' : str_replace('/', '-', (trim($this->route->route(), '/')));
     }
 
     /**
