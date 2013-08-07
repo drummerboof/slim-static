@@ -68,4 +68,14 @@ class NotFoundPage extends Page {
     {
         return false;
     }
+
+    /**
+     * Return false as this is a page not found page
+     *
+     * @return bool
+     */
+    public function exists()
+    {
+        return false;
+    }
 }

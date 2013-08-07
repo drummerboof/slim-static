@@ -80,4 +80,15 @@ class Page {
     {
         return $this->url() === '/';
     }
+
+    /**
+     * Whether or not this page exists.
+     * Can be overridden in child classes (page not found)
+     *
+     * @return bool
+     */
+    public function exists()
+    {
+        return true;
+    }
 }
