@@ -55,6 +55,28 @@ class PageManager {
     }
 
     /**
+     * Get an array listing the path to a given page as an array of pages.
+     * Array always starts with the homepage and ends with the given page.
+     *
+     * @param Page $page
+     * @return array
+     */
+    public function path(Page $page)
+    {
+        $pages = array();
+        $url = $page->url();
+        $offset = 0;
+        while (($position = strpos($url, '/', $offset)) !== false) {
+            $path = substr($url, 0, $position + 1);
+            if ($this->get($path)->exists()) {
+                $pages[] = $this->get($path);
+            }
+            $offset = $position + 1;
+        }
+        return $pages;
+    }
+
+    /**
      * Set the routes on which this page manager operates
      *
      * @param array $routes
