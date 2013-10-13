@@ -153,10 +153,11 @@ class Generator
         $requestUri = $_SERVER['REQUEST_URI'];
         $scriptName = $env['SCRIPT_NAME'];
         $prefixLen = strlen($scriptName);
-        if (substr($requestUri, 0, $prefixLen) === $scriptName) {
-            $env['PATH_INFO'] = substr_replace($requestUri, '', 0, $prefixLen);
+        $requestUriNoParams = strpos($requestUri, '?') !== false ? substr($requestUri, 0, strpos($requestUri, '?')) : $requestUri;
+        if (substr($requestUriNoParams, 0, $prefixLen) === $scriptName) {
+            $env['PATH_INFO'] = substr_replace($requestUriNoParams, '', 0, $prefixLen);
         } else {
-            $env['PATH_INFO'] = $requestUri;
+            $env['PATH_INFO'] = $requestUriNoParams;
         }
     }
 }
