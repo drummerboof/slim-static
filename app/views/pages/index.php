@@ -1,5 +1,5 @@
 <?php
-$this->appendData(array(
+$this->replace(array(
     'title' => 'Different Title'
 ));
 ?>

@@ -32,6 +32,7 @@ class LayoutView extends \Slim\View
      */
     public function __construct(PageManager $pageManager, $layout = null)
     {
+        parent::__construct();
         $this->pages = $pageManager;
         if ($layout) {
             $this->setLayout($layout);
@@ -63,7 +64,7 @@ class LayoutView extends \Slim\View
         if ($this->hasLayout())
         {
             $content = parent::render(($prefix ? $prefix : self::$PAGE) . $template);
-            $this->appendData(array(
+            $this->replace(array(
                 '_content' => $content
             ));
             return parent::render($this->layout);
@@ -85,7 +86,7 @@ class LayoutView extends \Slim\View
     public function partial($template, $data = array())
     {
         if (!empty($data)) {
-            $this->appendData($data);
+            $this->replace($data);
         }
         return parent::render(self::$PARTIAL . $template);
     }

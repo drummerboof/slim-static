@@ -20,13 +20,13 @@ $app->hook('slim.before', function () use ($app) {
 
 $app->error(function (\Exception $exception) use ($app) {
     $app->response()->status(500);
-    $app->view()->appendData(array('exception' => $exception));
-    echo $app->view()->render('generic.php', LayoutView::$ERROR);
+    $app->view()->replace(array('exception' => $exception));
+    echo $app->view()->fetch('generic.php', LayoutView::$ERROR);
 });
 
 $app->notFound(function () use ($app) {
     $app->response()->status(404);
-    echo $app->view()->render('404.php', LayoutView::$ERROR);
+    echo $app->view()->fetch('404.php', LayoutView::$ERROR);
 });
 
 $app->run();
